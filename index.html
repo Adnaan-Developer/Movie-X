@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie X </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+        integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon/favicon.ico">
+</head>
+
+<body>
+    <div class="page-loading" id="page-loading">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <p>Loading Movies...</p>
+    </div>
+    <!-- navbar -->
+    <div class="nav">
+        <a href="index.html" class="name">🎬 Movie X</a>
+        <button class="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="nav-items">
+            <a href="index.html" class="home">Home</a>
+            <a href="movie_section.html" class="movies-nav">Movies</a>
+            <a href="genres.html" class="genres-nav">Genres</a>
+            <a href="about.html" class="about">About</a>
+        </div>
+        <div class="search-btn">
+            <input type="search" placeholder="Search Movies" id="input" autocomplete="off">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+    </div>
+    <div class="hero-section">
+        <img class="hero-poster" src="avengers.png" alt="">
+        <div class="info">
+            <p class="movie-name"></p>
+            <p class="year"></p>
+            <p class="genre"></p>
+            <p class="plot"></p>
+            <p class="imdb"></p>
+        </div>
+    </div>
+    <div class="search-results">
+    </div>
+    <div class="latest-movies">
+        <h2 class="latest">Trending Movies</h2>
+        <div class="movie-wrapper">
+            <button class="scroll-btn left" id="left-btn">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="movie-container">
+            </div>
+            <button class="scroll-btn right" id="right-btn">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    <div class="popular-movies">
+        <h2 class="popular">Popular Movies</h2>
+        <div class="movie-wrapper">
+            <button class="scroll-btn left" id="left-btn2">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="movie-container2">
+            </div>
+            <button class="scroll-btn right" id="right-btn2">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    <footer>
+        <h2 class="footer-head">🎬 MOVIE X</h2>
+        <p class="footer-text">&copy; 2026 Movie X by Adnaan</p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+
+</html>
