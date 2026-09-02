@@ -489,7 +489,7 @@ footer {
 
 .btn-show,
 .load-more,
-.share-btn {
+.share-btn, .trailer-btn {
     background-color: #d6062c;
     border: 2px solid rgba(255, 255, 255, 0.08);
     border-radius: 2rem;
@@ -501,6 +501,12 @@ footer {
     outline: none;
     font-size: 1.5rem;
     display: block;
+    cursor: pointer;
+}
+
+.btns {
+    display: flex;
+    gap: 1rem;
 }
 
 .genres {

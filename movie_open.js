@@ -14,6 +14,7 @@ let navItems = document.querySelector(".nav-items");
 let shareBtn = document.querySelector('.share-btn');
 let details = document.querySelector(".details");
 let pageLoading = document.querySelector("#page-loading");
+let trailerBtn = document.querySelector(".trailer-btn");
 
 let apiKey = "a91a398701959efb03b5bfd2e1cfade0";
 
@@ -44,10 +45,11 @@ const getMovie = async () => {
     try {
         const params = new URLSearchParams(window.location.search);
         const movieId = params.get("id");
-        const movieDetailsURL = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
+        const movieDetailsURL = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=videos`;
 
         let response = await fetch(movieDetailsURL);
         let data = await response.json();
+        console.log(data);
 
         if (title) {
             title.innerText = data.title;
@@ -102,6 +104,30 @@ const getMovie = async () => {
             const moviePageUrl = window.location.href;
             shareMovie(data.title, moviePageUrl);
         });
+
+        let trailerYt = "";
+        function getTrailer() {
+            if (!data.videos?.results || data.videos.results.length === 0) {
+                trailerBtn.style.display = "none";
+                return;
+            }
+            data.videos.results.forEach(element => {
+                if (element.type === "Trailer" && element.site === "YouTube") {
+                    trailerYt = `https://www.youtube.com/watch?v=${element.key}`;
+                }
+            });
+
+            if (!trailerYt) {
+                trailerBtn.style.display = "none";
+            }
+        }
+
+        getTrailer();
+
+        trailerBtn?.addEventListener("click", () => {
+            window.open(trailerYt, '_blank');    
+        });
+
     } catch (e) { console.error(e); }
 }
 
