@@ -573,8 +573,22 @@ footer {
         height: auto;
     }
 
+    .hero-section {
+        margin-top: 6rem;
+        height: 60vh;
+        width: 100%;
+    }
+
+    .info {
+        margin-top: auto;
+    }
+
+    .info p {
+        margin-top: auto;
+    }
+
     .scroll-btn.right,
-    .scroll-btn.left {
+    .scroll-btn.left, .plot, .imdb {
         display: none;
     }
 

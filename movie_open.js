@@ -58,7 +58,7 @@ const getMovie = async () => {
         if (moviePoster) {
             moviePoster.src = data.poster_path
                 ? `https://image.tmdb.org/t/p/w300${data.poster_path}`
-                : `https://via.placeholder.com/500x750?text=No+Poster`;
+                : `https://placehold.co/500x750?text=No+Poster`;
             moviePoster.alt = data.title || "N/A";
         }
 

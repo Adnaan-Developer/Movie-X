@@ -34,7 +34,7 @@ const getLatest = async () => {
             title.innerText = movie.title;
             poster.src = movie.poster_path
                 ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                : `https://via.placeholder.com/500x750?text=No+Poster`;
+                : `https://placehold.co/500x750?text=No+Poster`;
             poster.alt = movie.title || "Movie Poster";
             latestMovie.append(poster, title);
             latestResults.append(latestMovie);

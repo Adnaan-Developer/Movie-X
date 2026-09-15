@@ -24,7 +24,7 @@ const renderMovies = (movieList) => {
 
         poster.src = item.poster_path
             ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-            : `https://via.placeholder.com/500x750?text=No+Poster`;
+            : `https://placehold.co/500x750?text=No+Poster`;
         poster.alt = item.title || "Poster";
 
         title.innerText = item.title;

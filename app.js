@@ -3,16 +3,18 @@ let heroYear = document.querySelector(".hero-section .year");
 let heroGenre = document.querySelector(".hero-section .genre");
 let heroPlot = document.querySelector(".hero-section .plot");
 let heroImdb = document.querySelector(".hero-section .imdb");
+
 let movieContainer = document.querySelector(".movie-container");
 let movieContainer2 = document.querySelector(".movie-container2");
 let leftBtn = document.querySelector("#left-btn");
 let rightBtn = document.querySelector("#right-btn");
 let leftBtn2 = document.querySelector("#left-btn2");
 let rightBtn2 = document.querySelector("#right-btn2");
+
 let searchInput = document.querySelector(".search-btn #input");
-let searchBtn = document.querySelector(".search-btn i");
 let searchResults = document.querySelector(".search-results");
 let hamburger = document.querySelector(".hamburger");
+
 let hamburgerIcon = document.querySelector(".hamburger i");
 let navItems = document.querySelector(".nav-items");
 let pageLoading = document.querySelector("#page-loading");
@@ -44,7 +46,7 @@ function renderMovies(movieList, container, showTitle = false) {
 
         poster.src = movieData.poster_path
             ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
-            : `https://via.placeholder.com/500x750?text=No+Poster`;
+            : `https://placehold.co/500x750?text=No+Poster`;
         poster.alt = movieData.title || "Poster";
 
         movie.append(poster);
@@ -58,7 +60,7 @@ function renderMovies(movieList, container, showTitle = false) {
         movie.classList.add('movie');
         container.append(movie);
 
-        poster.addEventListener("click", () => {
+        movie.addEventListener("click", () => {
             getId(movieData.id)
         });
     }
@@ -77,7 +79,7 @@ const getHero = async () => {
         let response = await fetch(URL);
         let data = await response.json();
         heroMName.innerText = data.results[0].title;
-        heroYear.innerText = "Year: " + data.results[0].release_date;
+        heroYear.innerText = "Year: " + data.results[0].release_date.split("-")[0];
         heroPlot.innerText = "Overview: " + data.results[0].overview;
         heroImdb.innerText = "⭐ " + data.results[0].vote_average;
     } catch (e) { console.error(e); }
@@ -99,46 +101,52 @@ const getPoster2 = async () => {
     } catch (e) { console.error(e); }
 }
 
-searchBtn?.addEventListener("click", () => {
+let searchTimeout = null;
+
+searchInput?.addEventListener("input", () => {
     const searchName = searchInput.value.trim();
+
+    clearTimeout(searchTimeout);
 
     if (searchName === "") {
         searchResults.innerHTML = "";
         return;
     }
 
-    const searchMovie = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchName}`;
+    searchTimeout = setTimeout(() => {
+        const searchMovie = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(searchName)}`;
 
-    fetch(searchMovie)
-        .then(response => response.json())
-        .then(data => {
-            searchResults.innerHTML = "";
+        fetch(searchMovie)
+            .then(response => response.json())
+            .then(data => {
+                searchResults.innerHTML = "";
 
-            if (!data.results || data.results.length === 0) {
-                let searchNotFound = document.createElement('p');
-                searchNotFound.innerText = "Movie Not Found";
-                searchResults.append(searchNotFound);
-                return;
-            }
+                if (!data.results || data.results.length === 0) {
+                    let searchNotFound = document.createElement('p');
+                    searchNotFound.innerText = "Movie Not Found";
+                    searchResults.append(searchNotFound);
+                    return;
+                }
 
-            let div = document.createElement('div');
-            let SearchText = document.createElement('p');
-            SearchText.classList.add("search-head");
-            SearchText.innerText = `Search Results of "${searchName}"`;
-            div.append(SearchText);
-            searchResults.append(div);
+                let div = document.createElement('div');
+                let SearchText = document.createElement('p');
+                SearchText.classList.add("search-head");
+                SearchText.innerText = `Search Results of "${searchName}"`;
+                div.append(SearchText);
+                searchResults.append(div);
 
-            let results = data.results
-                .filter(movie => movie.release_date && movie.release_date >= "1990-01-01")
-                .sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+                let results = data.results
+                    .filter(movie => movie.release_date && movie.release_date >= "1990-01-01")
+                    .sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
 
-            let cardsWrapper = document.createElement("div");
-            cardsWrapper.classList.add("search-cards-wrapper");
-            searchResults.append(cardsWrapper);
+                let cardsWrapper = document.createElement("div");
+                cardsWrapper.classList.add("search-cards-wrapper");
+                searchResults.append(cardsWrapper);
 
-            renderMovies(results, cardsWrapper, true); 
-        })
-        .catch(err => console.error("Search failed:", err));
+                renderMovies(results, cardsWrapper, true);
+            })
+            .catch(err => console.error("Search failed:", err));
+    }, 300);
 });
 
 window.addEventListener("load", () => {
